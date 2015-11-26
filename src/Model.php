@@ -1,5 +1,7 @@
 <?php
 
+namespace Gionin;
+
 class Model extends Api {
 
     protected $_findTypes = [
