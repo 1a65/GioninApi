@@ -1,0 +1,22 @@
+{
+    "name": "raphaelgiovanini/gioninApi",
+    "description": "Gionin API V1 PHP wrapper",
+    "license": "MIT",
+    "keywords": ["gionin", "api"],
+    "authors": [
+        {
+            "name": "Raphael Giovanini",
+            "email": "raphaelgiovanini@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "1a65\\GioninApi\\": "src"
+        }
+    }
+}
