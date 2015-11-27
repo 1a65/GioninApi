@@ -130,7 +130,7 @@ class Api{
      **/
     protected function setUserUrl()
     {
-        if (0 == strlen($this->_user)) {
+        if (!isset($this->_user[1])) {
             throw new Exception("user not declared", 1);
         }
         $this->_url = str_replace('{user}', $this->_user, $this->_url);
@@ -144,7 +144,7 @@ class Api{
      **/
     protected function setAppUrl()
     {
-        if (0 == strlen($this->app)) {
+        if (!isset($this->app[1])) {
             throw new Exception("App not declared", 1);
         }
         $this->_url = str_replace('{app}', $this->app, $this->_url);
@@ -164,7 +164,7 @@ class Api{
 
         $this->setAppUrl();
 
-        if (0 == strlen($this->table)) {
+        if (!isset($this->table[1])) {
             throw new Exception("Table not declared", 1);
         }
         $this->_url = str_replace('{table}', $this->table, $this->_url);
