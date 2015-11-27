@@ -28,7 +28,7 @@ class Model extends Api {
    
         $varifyValue($this, 'setApp', $app);
         $varifyValue($this, 'setTable', $table);
-        $varifyValue($this, 'debug', $debug);
+        $varifyValue($this, 'setDebug', $debug);
 
     }
 
