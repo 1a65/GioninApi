@@ -22,14 +22,13 @@ class Model extends Api {
 
         $this->setCredentials($appUsername, $appSecret);
 
-        $this->_debug = $debug;
-        
         $varifyValue = function($obj, $method, $value){
                $value && $obj->$method($value);
         };
    
         $varifyValue($this, 'setApp', $app);
         $varifyValue($this, 'setTable', $table);
+        $varifyValue($this, 'debug', $debug);
 
     }
 

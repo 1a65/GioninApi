@@ -171,6 +171,16 @@ class Api{
     }
 
     /**
+     * Set parameters debug to teste APIi
+     *
+     * @return void
+     * @author Raphael Giovanini
+     **/
+    public function setDebug($v){
+	$this->_debug = ($debug) ?: false;
+    }	
+
+    /**
      * API call method for sending requests using GET, POST, PUT, DELETE OR PATCH
      *
      * @return array
