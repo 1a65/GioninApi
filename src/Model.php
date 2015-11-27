@@ -26,7 +26,7 @@ class Model extends Api {
         
         $varifyValue = function($obj, $method, $value){
                $value && $obj->$method($value);
-        }
+        };
    
         $varifyValue($this, 'setApp', $app);
         $varifyValue($this, 'setTable', $table);
