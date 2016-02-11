@@ -25,10 +25,10 @@ class Model extends Api {
         $varifyValue = function($obj, $method, $value){
                $value && $obj->$method($value);
         };
-   
+
         $varifyValue($this, 'setApp', $app);
         $varifyValue($this, 'setTable', $table);
-        $varifyValue($this, 'debug', $debug);
+        $varifyValue($this, 'setDebug', $debug);
 
     }
 
@@ -48,19 +48,34 @@ class Model extends Api {
         return $this->setOperation('PUT', $data);
 
     }
-
     public function delete($data){
         return $this->setOperation('DELETE', $data);
 
     }
 
-    public function find($type = 'all', $data = []){
+    public function find($type = 'all', $data = [], $page = 1, $limit = 20){
 
         if (!in_array($type, $this->_findTypes)) {
             throw new Exception("Error type for find", 1);
         }
+        $fields = [];
 
-        return $this->setOperation('GET', $data);
+        $data['json'] = json_encode([
+            'q' => $data,
+            'page' => $page,
+            'limit' => $limit,
+            'fields' => $fields,
+            'order' => [
+                 'default' => 'asc'
+            ]
+        ]);
+
+        if($return = $this->setOperation('GET', $data)){
+            if ($type=='first') {
+                return $return[0];
+            }
+        }
+        return $return;
 
     }
 
@@ -71,7 +86,7 @@ class Model extends Api {
     }
 
     public function findById($id){
-        return $this->find('first', ['_id' => $id]);
+        return $this->find('first', ['_id' => $id], 1, 1);
     }
 
 }

@@ -199,7 +199,7 @@ class Api{
             CURLOPT_FORBID_REUSE   => true,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_HEADER         => false,
-            CURLOPT_TIMEOUT        => 5,
+            CURLOPT_TIMEOUT        => 500,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_FOLLOWLOCATION => true
         );
@@ -229,12 +229,16 @@ class Api{
         if ($this->_debug) {
 
             echo '<pre>';
+            echo date('Y-m-d H:i:s')."\n";
             echo 'Url: '.$this->_url.' - Method: '.$this->_method ."\n";
             var_dump(
                 $this->_data,
                 $result
 
             );
+            if ($error) {
+                echo $error . "\n";
+            }
             echo "\n------------------\n";
             echo '</pre>';
         }
