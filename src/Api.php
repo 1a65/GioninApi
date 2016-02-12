@@ -177,7 +177,7 @@ class Api{
      * @author Raphael Giovanini
      **/
     public function setDebug($v){
-	$this->_debug = ($debug) ?: false;
+	   $this->_debug = ($v) ?: false;
     }
 
     /**
