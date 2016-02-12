@@ -178,7 +178,7 @@ class Api{
      **/
     public function setDebug($v){
 	$this->_debug = ($debug) ?: false;
-    }	
+    }
 
     /**
      * API call method for sending requests using GET, POST, PUT, DELETE OR PATCH
@@ -188,6 +188,11 @@ class Api{
      **/
     public function request(){
         $url = $this->_url;
+
+        if ($this->_method=='GET') {
+            $url .= '?' . http_build_query($this->_data);
+        }
+
         $ch = \curl_init();
 
         if (!empty($this->_headers)) {
@@ -212,9 +217,7 @@ class Api{
 
         \curl_setopt_array($ch, $curl_options);
 
-        if ($this->_method=='GET') {
-            $url .= '?' . http_build_query($this->_data);
-        }else{
+        if ($this->_method!='GET') {
             \curl_setopt($ch, CURLOPT_POST, count($this->_data));
             \curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->_data));
         }
