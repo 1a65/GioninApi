@@ -9,6 +9,8 @@ class Model extends Api {
         'first'
     ];
 
+    public $total;
+
     public function __construct(
         $user = '',
         $appUsername = '',
@@ -75,6 +77,8 @@ class Model extends Api {
                 return $return[0];
             }
         }
+        $this->total = $return['_total'];
+        unset($return['_total']);
         return $return;
 
     }
