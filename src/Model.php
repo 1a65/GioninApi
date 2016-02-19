@@ -83,7 +83,11 @@ class Model extends Api {
 
     }
 
-    public function findFirst($data){
+    public function findAll($data = []){
+        return $this->find('all', $data, 1 , 100000);
+    }
+
+    public function findFirst($data = []){
 
         return $this->find('first', $data);
 
