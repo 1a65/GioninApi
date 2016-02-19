@@ -8,6 +8,9 @@ class Model extends Api {
         'all',
         'first'
     ];
+    protected $_conditions = [];
+    protected $_fields = [];
+    protected $_order = ['default' => 'asc'];
 
     public $total;
 
@@ -41,18 +44,44 @@ class Model extends Api {
         return $this->request();
     }
 
+
+    protected function setOrder($order = []){
+        $order !== [] && $this->_order = $order;
+    }
+
+    protected function setFields($fields = []){
+        $fields !== [] && $this->_fields = $fields;
+    }
+
     public function insert($data){
         return $this->setOperation('POST', $data);
-
     }
 
     public function update($data){
         return $this->setOperation('PUT', $data);
-
     }
+
     public function delete($data){
         return $this->setOperation('DELETE', $data);
+    }
 
+    private function traitamentData($data){
+
+        if (isset($data['conditions'])) {
+            $this->_conditions = $data['conditions'];
+            $this->traitamentOrder($data);
+            $this->traitamentFields($data);
+            return;
+        }
+        $this->_conditions = $data;
+    }
+
+    private function traitamentOrder($data){
+        isset($data['order']) && is_array($data['order']) && $this->setOrder($data['order']);
+    }
+
+    private function traitamentFields($data){
+        isset($data['order']) && is_array($data['fields']) && $this->setFields($data['fields']);
     }
 
     public function find($type = 'all', $data = [], $page = 1, $limit = 20){
@@ -60,20 +89,19 @@ class Model extends Api {
         if (!in_array($type, $this->_findTypes)) {
             throw new Exception("Error type for find", 1);
         }
-        $fields = [];
+
+        $this->traitamentData($data);
 
         $data['json'] = json_encode([
-            'q' => $data,
+            'q' => $this->_conditions,
             'page' => $page,
             'limit' => $limit,
-            'fields' => $fields,
-            'order' => [
-                 'default' => 'asc'
-            ]
+            'fields' => $this->_fields,
+            'order' => $this->_order
         ]);
 
         if($return = $this->setOperation('GET', $data)){
-            if ($type=='first') {
+            if ($type == 'first') {
                 return $return[0];
             }
         }
@@ -83,8 +111,8 @@ class Model extends Api {
 
     }
 
-    public function findAll($data = []){
-        return $this->find('all', $data, 1 , 100000);
+    public function findAll($data = [], $page = 1 , $limit = 1000000){
+        return $this->find('all', $data, $page , $limit);
     }
 
     public function findFirst($data = []){
