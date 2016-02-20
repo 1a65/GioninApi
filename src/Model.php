@@ -101,12 +101,15 @@ class Model extends Api {
         ]);
 
         if($return = $this->setOperation('GET', $data)){
+            $this->total = $return['_total'];
+            unset($return['_total']);
+        }
+        if(isset($return[0])){
             if ($type == 'first') {
                 return $return[0];
             }
         }
-        $this->total = $return['_total'];
-        unset($return['_total']);
+
         return $return;
 
     }
