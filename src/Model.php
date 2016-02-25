@@ -2,6 +2,11 @@
 
 namespace Gionin;
 
+/**
+ * Class for using API with a model
+ * @package default
+ * @author  Raphael Giovanini
+**/
 class Model extends Api {
 
     protected $_findTypes = [
@@ -10,7 +15,9 @@ class Model extends Api {
     ];
     protected $_conditions = [];
     protected $_fields = [];
-    protected $_order = ['default' => 'asc'];
+    protected $_order = [
+        'default' => 'asc'
+    ];
 
     public $total;
 
@@ -66,7 +73,12 @@ class Model extends Api {
     }
 
     private function traitamentData($data){
-
+        if(isset($data['order'])){
+            unset($data['order']);
+        }
+        if(isset($data['fields'])){
+            unset($data['fields']);
+        }
         if (isset($data['conditions'])) {
             $this->_conditions = $data['conditions'];
             $this->traitamentOrder($data);
@@ -77,11 +89,11 @@ class Model extends Api {
     }
 
     private function traitamentOrder($data){
-        isset($data['order']) && is_array($data['order']) && $this->setOrder($data['order']);
+        return isset($data['order']) && is_array($data['order']) && $this->setOrder($data['order']);
     }
 
     private function traitamentFields($data){
-        isset($data['order']) && is_array($data['fields']) && $this->setFields($data['fields']);
+        isset($data['fields']) && is_array($data['fields']) && $this->setFields($data['fields']);
     }
 
     public function find($type = 'all', $data = [], $page = 1, $limit = 20){
@@ -90,6 +102,7 @@ class Model extends Api {
             throw new Exception("Error type for find", 1);
         }
 
+        $this->traitamentOrder($data);
         $this->traitamentData($data);
 
         $data['json'] = json_encode([

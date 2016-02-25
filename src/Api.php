@@ -199,7 +199,7 @@ class Api{
             \curl_setopt($ch, CURLOPT_HTTPHEADER, $this->_headers);
         }
 
-        $curl_options = array(
+        $curl_options = [
             CURLOPT_VERBOSE        => false,
             CURLOPT_FORBID_REUSE   => true,
             CURLOPT_RETURNTRANSFER => 1,
@@ -207,7 +207,7 @@ class Api{
             CURLOPT_TIMEOUT        => 500,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_FOLLOWLOCATION => true
-        );
+        ];
 
         \curl_setopt($ch, CURLOPT_URL, $url);
 
@@ -233,7 +233,7 @@ class Api{
 
             echo '<pre>';
             echo date('Y-m-d H:i:s')."\n";
-            echo 'Url: '.$this->_url.' - Method: '.$this->_method ."\n";
+            echo 'Url: ' . $this->_url . ' - Method: ' . $this->_method ."\n";
             var_dump(
                 $this->_data,
                 $result
