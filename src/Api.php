@@ -218,8 +218,12 @@ class Api{
         \curl_setopt_array($ch, $curl_options);
 
         if ($this->_method!='GET') {
-            \curl_setopt($ch, CURLOPT_POST, count($this->_data));
-            \curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->_data));
+            $dataString = json_encode($this->_data);
+            \curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+            \curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($dataString))
+            );
         }
 
         $result      = \curl_exec($ch);
