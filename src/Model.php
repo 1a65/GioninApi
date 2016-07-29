@@ -19,6 +19,11 @@ class Model extends Api {
         'default' => 'asc'
     ];
 
+    /**
+     * Retorna o total da ultima busca
+     *
+     * @var int
+     **/
     public $total;
 
     public function __construct(
