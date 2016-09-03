@@ -77,6 +77,7 @@ class Model extends Api {
             unset($data['order']);
         }
         if(isset($data['fields'])){
+            $this->traitamentFields($data);
             unset($data['fields']);
         }
         if (isset($data['conditions'])) {
