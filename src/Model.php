@@ -80,7 +80,6 @@ class Model extends Api {
         if(isset($data['order'])){
             unset($data['order']);
         }
-        $this->reset();
         if(isset($data['fields'])){
             $this->traitamentFields($data);
             unset($data['fields']);
@@ -107,7 +106,7 @@ class Model extends Api {
         if (!in_array($type, $this->_findTypes)) {
             throw new Exception("Error type for find", 1);
         }
-
+	$this->reset();
         $this->traitamentOrder($data);
         $this->traitamentData($data);
 
