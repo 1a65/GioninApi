@@ -53,7 +53,7 @@ class Model extends Api {
 
     public function reset(){
         $this->_fields = [];
-        $this->_order  = ['created' => 'asc'];
+        $this->_order  = ['default' => 'asc'];
     }
 
     protected function setOrder($order = []){
