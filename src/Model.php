@@ -56,6 +56,10 @@ class Model extends Api {
         return $this->request();
     }
 
+    public function reset(){
+        $this->_fields = [];
+        $this->_order  = ['created' => 'asc'];
+    }
 
     protected function setOrder($order = []){
         $order !== [] && $this->_order = $order;
@@ -81,6 +85,7 @@ class Model extends Api {
         if(isset($data['order'])){
             unset($data['order']);
         }
+        $this->reset();
         if(isset($data['fields'])){
             $this->traitamentFields($data);
             unset($data['fields']);
